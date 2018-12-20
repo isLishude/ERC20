@@ -1,6 +1,6 @@
 pragma solidity ^0.5.2;
 
-contract TronToken {
+contract ERC20Token {
     string public name = "ERC20Token";
     string public symbol = "ERC20Token";    
     uint256 public decimals = 6;
