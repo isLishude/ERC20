@@ -1,2 +1,1 @@
-# ERC20
-ERC20 example
+ERC20 examples
