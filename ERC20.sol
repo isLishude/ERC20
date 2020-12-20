@@ -3,18 +3,18 @@
 pragma solidity ^0.8.0;
 
 interface IERC20 {
+    function symbol() external view returns (string memory);
+
+    function name() external view returns (string memory);
+
+    function decimals() external view returns (uint8);
+
+    function totalSupply() external view returns (uint256);
+
     function balanceOf(address tokenOwner)
         external
         view
         returns (uint256 balance);
-
-    function symbol() external view returns (string memory);
-
-    function name() external view returns (string memory);
-    
-    function decimals() external view returns (uint8);
-
-    function totalSupply() external view returns (uint256);
 
     function allowance(address tokenOwner, address spender)
         external
@@ -29,9 +29,11 @@ interface IERC20 {
         external
         returns (bool success);
 
-    function transferFrom(address from, address to, uint256 tokens)
-        external
-        returns (bool success);
+    function transferFrom(
+        address from,
+        address to,
+        uint256 tokens
+    ) external returns (bool success);
 
     event Transfer(address indexed from, address indexed to, uint256 tokens);
     event Approval(
@@ -42,10 +44,10 @@ interface IERC20 {
 }
 
 contract ERC20 is IERC20 {
-    string constant public override symbol = "ERC20";
-    string constant public override name = "ERC20 TOKEN EXAMPLE";
-    uint8 constant public override decimals = 18;
-    uint256 constant public override totalSupply = 1000000 * 10**18;
+    string public constant override symbol = "ERC20";
+    string public constant override name = "ERC20 TOKEN EXAMPLE";
+    uint8 public constant override decimals = 18;
+    uint256 public constant override totalSupply = 1000000 * 10**18;
 
     mapping(address => uint256) balances;
     mapping(address => mapping(address => uint256)) allowed;
@@ -57,8 +59,8 @@ contract ERC20 is IERC20 {
 
     function balanceOf(address tokenOwner)
         public
-        override
         view
+        override
         returns (uint256 balance)
     {
         return balances[tokenOwner];
@@ -85,11 +87,11 @@ contract ERC20 is IERC20 {
         return true;
     }
 
-    function transferFrom(address from, address to, uint256 tokens)
-        public
-        override
-        returns (bool success)
-    {
+    function transferFrom(
+        address from,
+        address to,
+        uint256 tokens
+    ) public override returns (bool success) {
         balances[from] -= tokens;
         allowed[from][msg.sender] -= tokens;
         balances[to] += tokens;
@@ -99,8 +101,8 @@ contract ERC20 is IERC20 {
 
     function allowance(address tokenOwner, address spender)
         public
-        override
         view
+        override
         returns (uint256 remaining)
     {
         return allowed[tokenOwner][spender];
